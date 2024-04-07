@@ -26,18 +26,24 @@ class Graph:
  
      
     # A function used by DFS
-    def DFSUtil(self, v, visited):
+    def DFSUtil(self, v, visited,prev = None):
  
         # Mark the current node as visited
         # and print it
         visited.add(v)
         print(v, end=' ')
  
+    # Print transition from prev to v
+        if prev is not None:
+            print("->", end=' ')
+            print(prev, "->", v, end=' ')
+            print()
+ 
         # Recur for all the vertices
         # adjacent to this vertex
         for neighbour in self.graph[v]:
             if neighbour not in visited:
-                self.DFSUtil(neighbour, visited)
+                self.DFSUtil(neighbour, visited,v)
  
      
     # The function to do DFS traversal. It uses
