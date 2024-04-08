@@ -1,3 +1,5 @@
+# Jared Kaiser & Bryce Bales AI Project
+
 import dash
 from dash.dependencies import Input, Output, State
 from dash import dcc
