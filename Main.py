@@ -93,23 +93,24 @@ app.layout = html.Div([
     html.H1("Tree Plot"),
     html.H2("Depth-First Search (DFS)"),
     html.P([
-            "Great reference "
-            "Great reference "
-            "Great reference"
+            "Uniform Cost Search (UCS) is a type of uninformed "
+            "search that performs a search based on the lowest path cost. "
+            "UCS helps us find the path from the starting node to the goal node with the minimum path cost."
     ]),
     html.P([
             "Source: ",
-            html.A("This should be a source", href="ThisShouldBealink.com", target="_blank")
+            html.A("UCS Source", href="https://www.educative.io/answers/what-is-uniform-cost-search", target="_blank")
     ]),
     html.H2("Depth-First Search (DFS)"),
     html.P([
-            "Great reference "
-            "Great reference "
-            "Great reference"
+            "Depth-first search (DFS) is an algorithm for searching a graph or tree data structure. The algorithm starts at the root (top) node of a tree and "
+            "goes as far as it can down a given branch (path), then backtracks until it finds an unexplored path, and then explores it. The algorithm does this "
+            "until the entire graph has been explored. Many problems in computer science can be thought of in terms of graphs. For example, analyzing networks, mapping routes, "
+            "scheduling, and finding spanning trees are graph problems. To analyze these problems, graph-search algorithms like depth-first search are useful."
     ]),
     html.P([
             "Source: ",
-            html.A("This should be a source", href="ThisShouldBealink.com", target="_blank")
+            html.A("DFS Source", href="https://brilliant.org/wiki/depth-first-search-dfs/#:~:text=Depth%2Dfirst%20search%20(DFS)%20is%20an%20algorithm%20for%20searching,path%2C%20and%20then%20explores%20it.", target="_blank")
     ]),
     html.Button('Run UCS', id='btn-ucs', n_clicks=0),
     html.Button('Run DFS', id='btn-dfs', n_clicks=0),
