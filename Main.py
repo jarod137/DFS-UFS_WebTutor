@@ -1,10 +1,13 @@
+# Jared Kaiser & Bryce Bales
+# UCS and DFS Webtutor
+# Last Updated 4/20/2023
+
 import dash
-from dash.dependencies import Input, Output, State
-from dash import dcc, html
-import igraph
-from igraph import Graph, Layout
+from dash.dependencies import Input, Output
+import dash_core_components as dcc
+import dash_html_components as html
 import plotly.graph_objects as go
-import time
+from igraph import Graph, Layout
 
 # UCS and DFS algorithms
 def ucs(graph, start):
@@ -81,6 +84,10 @@ graph_fig.update_layout(title='DFS-UCS_WebTutor', annotations=make_annotations(p
 # Initialize Dash app
 app = dash.Dash(__name__)
 
+# Initialize paths_gen outside the callback
+paths_gen = None
+button_id = None
+
 # Define the layout of the Dash app
 app.layout = html.Div([
     html.H1("Tree Plot"),
@@ -89,33 +96,34 @@ app.layout = html.Div([
     dcc.Graph(id='tree-plot', figure=graph_fig),
     dcc.Interval(
         id='interval-component',
-        interval=1000,  # in milliseconds
+        interval=1000,  # 1 second in milliseconds
         n_intervals=0
     )
 ])
-
-# Initialize paths_gen outside the callback
-paths_gen = None
 
 # Define callbacks to run algorithms and update the graph
 @app.callback(
     Output('tree-plot', 'figure'),
     [Input('interval-component', 'n_intervals')],
-    [State('btn-ucs', 'n_clicks'), State('btn-dfs', 'n_clicks')]
+    [Input('btn-ucs', 'n_clicks'), Input('btn-dfs', 'n_clicks')],
 )
 def update_figure(n_intervals, n_clicks_ucs, n_clicks_dfs):
-    global paths_gen  # Ensure we're modifying the global variable
+    global paths_gen, button_id  # Ensure we're modifying the global variables
     try:
         ctx = dash.callback_context
-        button_id = 'btn-ucs'  # default to UCS
         if ctx.triggered:
             button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        
+        if paths_gen is None:  # Check if paths_gen is None and initialize it
+            pass
 
         if button_id == 'btn-ucs':
             paths_gen = ucs(G, 0)
         elif button_id == 'btn-dfs':
             paths_gen = dfs(G, 0)
         
+        updated_fig = go.Figure()
+
         path = next(paths_gen, None)
         if path:
             highlighted_nodes = path
@@ -124,16 +132,34 @@ def update_figure(n_intervals, n_clicks_ucs, n_clicks_dfs):
             highlighted_nodes = []
             highlighted_edges = []
 
-        updated_fig = graph_fig.update_traces(marker=dict(color='#6175c1'), line=dict(color='rgb(210,210,210)', width=1))
+        # Add original traces
+        updated_fig.add_trace(go.Scatter(x=Xe, y=Ye, mode='lines', line=dict(color='rgb(210,210,210)', width=1), hoverinfo='none'))
+        updated_fig.add_trace(go.Scatter(x=Xn, y=Yn, mode='markers', name='Nodes',
+                                         marker=dict(symbol='circle-dot', size=18, color='#6175c1',
+                                                     line=dict(color='rgb(50,50,50)', width=1)),
+                                         text=labels, hoverinfo='text', opacity=0.8))
 
+        # Update traces based on highlighted nodes and edges
         for node in highlighted_nodes:
-            updated_fig.update_traces(marker=dict(color='red'), selector=dict(text=str(node)))
+            updated_fig.add_trace(go.Scatter(x=[position[node][0]], 
+                                             y=[2 * M - position[node][1]],
+                                             mode='markers',
+                                             marker=dict(color='red', size=18),
+                                             text=str(node),
+                                             hoverinfo='text'))
 
         for edge in highlighted_edges:
             updated_fig.add_trace(go.Scatter(x=[position[edge[0]][0], position[edge[1]][0]], 
                                             y=[2 * M - position[edge[0]][1], 2 * M - position[edge[1]][1]],
                                             mode='lines',
                                             line=dict(color='red', width=2)))
+
+        # Update layout
+        updated_fig.update_layout(title='DFS-UCS_WebTutor', annotations=make_annotations(position, labels),
+                                  font_size=12, showlegend=False, xaxis=axis, yaxis=axis,
+                                  margin=dict(l=40, r=40, b=85, t=100), hovermode='closest',
+                                  plot_bgcolor='rgb(248,248,248)')
+
         return updated_fig
     except Exception as e:
         print(str(e))
