@@ -91,6 +91,26 @@ button_id = None
 # Define the layout of the Dash app
 app.layout = html.Div([
     html.H1("Tree Plot"),
+    html.H2("Depth-First Search (DFS)"),
+    html.P([
+            "Great reference "
+            "Great reference "
+            "Great reference"
+    ]),
+    html.P([
+            "Source: ",
+            html.A("This should be a source", href="ThisShouldBealink.com", target="_blank")
+    ]),
+    html.H2("Depth-First Search (DFS)"),
+    html.P([
+            "Great reference "
+            "Great reference "
+            "Great reference"
+    ]),
+    html.P([
+            "Source: ",
+            html.A("This should be a source", href="ThisShouldBealink.com", target="_blank")
+    ]),
     html.Button('Run UCS', id='btn-ucs', n_clicks=0),
     html.Button('Run DFS', id='btn-dfs', n_clicks=0),
     dcc.Graph(id='tree-plot', figure=graph_fig),
@@ -99,6 +119,7 @@ app.layout = html.Div([
         interval=1000,  # 1 second in milliseconds
         n_intervals=0
     )
+    
 ])
 
 # Define callbacks to run algorithms and update the graph
