@@ -3,7 +3,7 @@
 This is a project for CS 475: Artificial Intelligence. It is a web-based program to show users how to use the DFS and UFS search algorithms.
 
 ## HOW TO USE
-To use this program, run the Main.py file and click the link in the output. This will take you to a window in your browser where the graph will be with buttons and descriptions of the algorithms as well as the sources they are taken from. The buttons are DFS(Runs Depth-First Search), UCS(Runs Uniform-Cost Search), and Sleep(Slows down visualization). You can also click the descriptions for a link to the website sited.
+To use this program, run the Main.py file and click the link in the output. This will take you to a window in your browser where the graph will be with buttons and descriptions of the algorithms as well as the sources they are taken from. The buttons are DFS(Runs Depth-First Search), UCS(Runs Uniform-Cost Search). You can also click the descriptions for a link to the website sited.
 
 ## The Problem:
 Search algorithms can often be hard to gauge whenever we are just looking at static images and numbers describing the algorithms. We want to help students understand how BFS and DFS work by making a visual representation using a GUI with a short description next to it. By doing this we aim to make the mystique behind how these search algorithms work no longer a mystery, but something that is easier to grasp and understand.
