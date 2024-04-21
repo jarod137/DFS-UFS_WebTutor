@@ -4,8 +4,8 @@
 
 import dash
 from dash.dependencies import Input, Output
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import plotly.graph_objects as go
 from igraph import Graph, Layout
 
@@ -184,7 +184,6 @@ def update_figure(n_intervals, n_clicks_ucs, n_clicks_dfs):
 
         return updated_fig
     except Exception as e:
-        print(str(e))
         return graph_fig
 
 # Run the Dash app
