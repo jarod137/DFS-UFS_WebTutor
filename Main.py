@@ -91,7 +91,7 @@ button_id = None
 # Define the layout of the Dash app
 app.layout = html.Div([
     html.H1("Tree Plot"),
-    html.H2("Depth-First Search (DFS)"),
+    html.H2("Uniform Cost Search (UCS)"),
     html.P([
             "Uniform Cost Search (UCS) is a type of uninformed "
             "search that performs a search based on the lowest path cost. "
